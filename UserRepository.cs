@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System;
 
 public class UserRepository
 {
@@ -6,6 +7,12 @@ public class UserRepository
 
     public void AddUser(string username, string email)
     {
+        if (!InputValidator.IsValidUsername(username))
+            throw new ArgumentException("Invalid username.", nameof(username));
+
+        if (!InputValidator.IsValidEmail(email))
+            throw new ArgumentException("Invalid email.", nameof(email));
+
         using (var connection = new MySqlConnection(connectionString))
         {
             connection.Open();

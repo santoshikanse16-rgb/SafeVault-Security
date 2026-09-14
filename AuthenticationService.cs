@@ -8,6 +8,12 @@ public class AuthenticationService
     // Register a user with a securely hashed password
     public void Register(string username, string password)
     {
+        if (!InputValidator.IsValidUsername(username))
+            throw new ArgumentException("Invalid username.", nameof(username));
+
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+            throw new ArgumentException("Password must be at least 8 characters long.", nameof(password));
+
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
         users[username] = hashedPassword;
     }

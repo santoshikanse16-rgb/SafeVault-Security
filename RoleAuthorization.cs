@@ -8,6 +8,9 @@ public class RoleAuthorization
     // Assign a role to a user
     public void AssignRole(string username, string role)
     {
+        if (!InputValidator.IsValidUsername(username))
+            throw new ArgumentException("Invalid username.", nameof(username));
+
         if (role != "admin" && role != "user")
             throw new ArgumentException("Invalid role.");
 
